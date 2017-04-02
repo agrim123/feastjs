@@ -1,6 +1,6 @@
 [![Express Logo](https://i.cloudup.com/zfY6lL7eFa-3000x3000.png)](http://expressjs.com/)
 
-[Express](https://www.npmjs.com/package/express-mvc-generator) MVC application generator.
+[Express'](https://www.npmjs.com/package/express-mvc-generator) MVC application generator.
 
 
 ## Installation
@@ -60,6 +60,10 @@ Install dependencies:
 $ npm install
 ```
 
+Setup your assets:
+```bash
+$ gulp
+```
 Start your Express.js app at `http://localhost:3000/`:
 
 ```bash
@@ -80,7 +84,7 @@ myapp
 |
 |
 |____app
-|	   |
+|      |
 |      |____assets
 |      |     |____javascripts
 |      |     |____stylesheets

@@ -152,14 +152,11 @@ if (!exit.exited) {
     mkdir(path + '/app', function () {
       //Setup Our assets
       mkdir(path + '/app/assets', function() {
-        mkdir(path + '/app/assets/javascripts')
+        mkdir(path + '/app/assets/javascripts', function () {
+          copyTemplate('js/script.js', path + '/app/assets/javascripts/script.js')
+        })
         mkdir(path + '/app/assets/stylesheets', function () {
-          switch (program.css) {
-            default:
-            copyTemplate('css/style.css', path + '/app/assets/stylesheets/style.css')
-            break
-          }
-          complete()
+          copyTemplate('css/style.css', path + '/app/assets/stylesheets/style.css')
         })
       })
       //Setup controllers
@@ -174,11 +171,16 @@ if (!exit.exited) {
       mkdir(path + '/app/views', function() {
         mkdir(path + '/app/views/index', function() {
           copyTemplate('ejs/home.ejs', path + '/app/views/index/home.ejs')
-          copyTemplate('ejs/error.ejs', path + '/app/views/errors.ejs')
+          copyTemplate('ejs/error.ejs', path + '/app/views/error.ejs')
+        })
+        mkdir(path + '/app/views/partials', function() {
+          copyTemplate('ejs/head.ejs', path + '/app/views/partials/head.ejs')
+          copyTemplate('ejs/footer.ejs', path + '/app/views/partials/footer.ejs')
         })
       })
       //Setup middlewares
       mkdir(path + '/app/middlewares')
+      complete()
     })
 
     mkdir(path, function () {
