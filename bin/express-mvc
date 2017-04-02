@@ -48,11 +48,6 @@ program
 .version(version, '    --version')
 .usage('[options] [dir]')
 .option('-e, --ejs', 'add ejs engine support', renamedOption('--ejs', '--view=ejs'))
-.option('    --pug', 'add pug engine support', renamedOption('--pug', '--view=pug'))
-.option('    --hbs', 'add handlebars engine support', renamedOption('--hbs', '--view=hbs'))
-.option('-H, --hogan', 'add hogan.js engine support', renamedOption('--hogan', '--view=hogan'))
-.option('-v, --view <engine>', 'add view <engine> support (dust|ejs|hbs|hjs|jade|pug|twig|vash) (defaults to jade)')
-.option('-c, --css <engine>', 'add stylesheet <engine> support (less|stylus|compass|sass) (defaults to plain css)')
 .option('    --git', 'add .gitignore')
 .option('-f, --force', 'force on non-empty directory')
 .parse(process.argv)
@@ -128,7 +123,7 @@ if (!exit.exited) {
       var prompt = launchedFromCmd() ? '>' : '$'
 
     console.log()
-    console.log('   install dependencies(oh yeah):')
+    console.log('   install dependencies:')
     console.log('     %s cd %s && npm install', prompt, path)
     console.log()
     console.log('   run the app:')
@@ -155,23 +150,11 @@ if (!exit.exited) {
 
   mkdir(path, function () {
     mkdir(path + '/app', function () {
+      //Setup Our assets
       mkdir(path + '/app/assets', function() {
         mkdir(path + '/app/assets/javascripts')
-        mkdir(path + '/app/assets/images')
         mkdir(path + '/app/assets/stylesheets', function () {
           switch (program.css) {
-            case 'less':
-            copyTemplate('css/style.less', path + '/app/assets/stylesheets/style.less')
-            break
-            case 'stylus':
-            copyTemplate('css/style.styl', path + '/app/assets/stylesheets/style.styl')
-            break
-            case 'compass':
-            copyTemplate('css/style.scss', path + '/app/assets/stylesheets/style.scss')
-            break
-            case 'sass':
-            copyTemplate('css/style.sass', path + '/app/assets/stylesheets/style.sass')
-            break
             default:
             copyTemplate('css/style.css', path + '/app/assets/stylesheets/style.css')
             break
@@ -179,86 +162,41 @@ if (!exit.exited) {
           complete()
         })
       })
+      //Setup controllers
+      mkdir(path + '/app/controllers', function() {
+        copyTemplate('js/controllers/index_controller.js', path + '/app/controllers/index_controller.js')
+      })
+      //Setup models
+      mkdir(path + '/app/models')
+      //Setup helpers
+      mkdir(path + '/app/helpers')
+      //Setup views
+      mkdir(path + '/app/views', function() {
+        mkdir(path + '/app/views/index', function() {
+          copyTemplate('ejs/home.ejs', path + '/app/views/index/home.ejs')
+          copyTemplate('ejs/error.ejs', path + '/app/views/errors.ejs')
+        })
+      })
+      //Setup middlewares
+      mkdir(path + '/app/middlewares')
+    })
+
+    mkdir(path, function () {
+      mkdir(path + '/public', function () {
+        mkdir(path + '/public/js')
+        mkdir(path + '/public/images')
+        mkdir(path + '/public/css')
+      })
+      complete()
     })
 
     mkdir(path + '/routes', function () {
-      copyTemplate('js/routes/index.js', path + '/routes/index.js')
-      copyTemplate('js/routes/users.js', path + '/routes/users.js')
+      copyTemplate('js/routes/routes.js', path + '/routes/routes.js')
       complete()
     })
-
-    mkdir(path + '/views', function () {
-      switch (program.view) {
-        case 'dust':
-        copyTemplate('dust/index.dust', path + '/views/index.dust')
-        copyTemplate('dust/error.dust', path + '/views/error.dust')
-        break
-        case 'ejs':
-        copyTemplate('ejs/index.ejs', path + '/views/index.ejs')
-        copyTemplate('ejs/error.ejs', path + '/views/error.ejs')
-        break
-        case 'jade':
-        copyTemplate('jade/index.jade', path + '/views/index.jade')
-        copyTemplate('jade/layout.jade', path + '/views/layout.jade')
-        copyTemplate('jade/error.jade', path + '/views/error.jade')
-        break
-        case 'hjs':
-        copyTemplate('hogan/index.hjs', path + '/views/index.hjs')
-        copyTemplate('hogan/error.hjs', path + '/views/error.hjs')
-        break
-        case 'hbs':
-        copyTemplate('hbs/index.hbs', path + '/views/index.hbs')
-        copyTemplate('hbs/layout.hbs', path + '/views/layout.hbs')
-        copyTemplate('hbs/error.hbs', path + '/views/error.hbs')
-        break
-        case 'pug':
-        copyTemplate('pug/index.pug', path + '/views/index.pug')
-        copyTemplate('pug/layout.pug', path + '/views/layout.pug')
-        copyTemplate('pug/error.pug', path + '/views/error.pug')
-        break
-        case 'twig':
-        copyTemplate('twig/index.twig', path + '/views/index.twig')
-        copyTemplate('twig/layout.twig', path + '/views/layout.twig')
-        copyTemplate('twig/error.twig', path + '/views/error.twig')
-        break
-        case 'vash':
-        copyTemplate('vash/index.vash', path + '/views/index.vash')
-        copyTemplate('vash/layout.vash', path + '/views/layout.vash')
-        copyTemplate('vash/error.vash', path + '/views/error.vash')
-        break
-      }
-      complete()
-    })
-
-    // CSS Engine support
-    switch (program.css) {
-      case 'less':
-      app.locals.modules.lessMiddleware = 'less-middleware'
-      app.locals.uses.push("lessMiddleware(path.join(__dirname, 'public'))")
-      break
-      case 'stylus':
-      app.locals.modules.stylus = 'stylus'
-      app.locals.uses.push("stylus.middleware(path.join(__dirname, 'public'))")
-      break
-      case 'compass':
-      app.locals.modules.compass = 'node-compass'
-      app.locals.uses.push("compass({ mode: 'expanded' })")
-      break
-      case 'sass':
-      app.locals.modules.sassMiddleware = 'node-sass-middleware'
-      app.locals.uses.push("sassMiddleware({\n  src: path.join(__dirname, 'public'),\n  dest: path.join(__dirname, 'public'),\n  indentedSyntax: true, // true = .sass and false = .scss\n  sourceMap: true\n})")
-      break
-    }
 
     // Template support
     switch (program.view) {
-      case 'dust':
-      app.locals.modules.adaro = 'adaro'
-      app.locals.view = {
-        engine: 'dust',
-        render: 'adaro.dust()'
-      }
-      break
       default:
       app.locals.view = {
         engine: program.view
@@ -272,7 +210,8 @@ if (!exit.exited) {
       version: '0.0.0',
       private: true,
       scripts: {
-        start: 'node ./bin/www'
+        start: 'node ./bin/www',
+        watch: 'nodemon ./bin/www'
       },
       dependencies: {
         'body-parser': '~1.17.1',
@@ -281,49 +220,22 @@ if (!exit.exited) {
         'express': '~4.15.2',
         'morgan': '~1.8.1',
         'serve-favicon': '~2.4.2'
+      },
+      devDependencies: {
+        "gulp": "^3.9.1",
+        "gulp-clean-css": "^3.0.4",
+        "gulp-concat": "^2.6.1",
+        "gulp-minify": "0.0.15",
+        "gulp-rename": "^1.2.2",
+        "gulp-size": "^2.1.0",
+        "gulp-uglify": "^2.1.2",
+        "nodemon": "^1.11.0"
       }
     }
 
     switch (program.view) {
-      case 'dust':
-      pkg.dependencies.adaro = '~1.0.4'
-      break
-      case 'jade':
-      pkg.dependencies['jade'] = '~1.11.0'
-      break
       case 'ejs':
       pkg.dependencies['ejs'] = '~2.5.6'
-      break
-      case 'hjs':
-      pkg.dependencies['hjs'] = '~0.0.6'
-      break
-      case 'hbs':
-      pkg.dependencies['hbs'] = '~4.0.1'
-      break
-      case 'pug':
-      pkg.dependencies['pug'] = '~2.0.0-beta11'
-      break
-      case 'twig':
-      pkg.dependencies['twig'] = '~0.10.3'
-      break
-      case 'vash':
-      pkg.dependencies['vash'] = '~0.12.2'
-      break
-    }
-
-    // CSS Engine support
-    switch (program.css) {
-      case 'less':
-      pkg.dependencies['less-middleware'] = '~2.2.0'
-      break
-      case 'compass':
-      pkg.dependencies['node-compass'] = '0.2.3'
-      break
-      case 'stylus':
-      pkg.dependencies['stylus'] = '0.54.5'
-      break
-      case 'sass':
-      pkg.dependencies['node-sass-middleware'] = '0.9.8'
       break
     }
 
@@ -341,7 +253,7 @@ if (!exit.exited) {
     if (program.git) {
       copyTemplate('js/gitignore', path + '/.gitignore')
     }
-
+    copyTemplate('js/gulpfile.js', path + '/gulpfile.js')
     complete()
   })
 }
@@ -440,16 +352,11 @@ done()
   // View engine
   if (program.view === undefined) {
     if (program.ejs) program.view = 'ejs'
-      if (program.hbs) program.view = 'hbs'
-        if (program.hogan) program.view = 'hjs'
-          if (program.pug) program.view = 'pug'
-        }
+  }
 
   // Default view engine
   if (program.view === undefined) {
-    warning('the default view engine will not be jade in future releases\n' +
-      "use `--view=jade' or `--help' for additional options")
-    program.view = 'jade'
+    program.view = 'ejs'
   }
 
   // Generate application
