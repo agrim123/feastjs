@@ -44,6 +44,19 @@ describe('express-mvc', function () {
       assert.notEqual(ctx.files.indexOf('package.json'), -1)
 
     })
+
+    it('should have controllers', function () {
+      assert.notEqual(ctx.files.indexOf('app/controllers/index_controller.js'), -1, 'app/controllers/index_controller.js')
+    })
+
+    it('should have routes', function () {
+      assert.notEqual(ctx.files.indexOf('routes/routes.js'), -1, 'routes/routes.js')
+    })
+
+    it('should have gulpfile', function () {
+      assert.notEqual(ctx.files.indexOf('gulpfile.js'), -1, 'gulpfile.js')
+    })
+
 /*
     it('should respond with stylesheet', function (done) {
       var file = path.resolve(ctx.dir, 'app.js')
