@@ -15,10 +15,10 @@
     "mkdirp": "0.5.1",
     "sorted-object": "2.0.1"
   },
-  "main": "bin/express-mvc",
+  "main": "bin/express",
   "preferGlobal": true,
   "bin": {
-    "express-mvc": "./bin/express-mvc"
+    "express": "./bin/express"
   },
   "devDependencies": {
     "eslint": "3.18.0",
