@@ -2,6 +2,8 @@
 
 [Express'](https://www.npmjs.com/package/express-mvc-generator) MVC application generator.
 
+[![npm version](http://img.shields.io/npm/v/express-mvc-builder.svg)](https://npmjs.org/package/express-mvc-builder)
+[![Downloads](http://img.shields.io/npm/dm/express-mvc-builder.svg)](https://npmjs.org/package/express-mvc-builder)
 
 ## Installation
 
@@ -82,7 +84,6 @@ $ npm run watch
 ```bash
 myapp
 |
-|
 |____app
 |      |
 |      |____assets
@@ -138,7 +139,6 @@ This generator can also be further configured with the following command line fl
 
 - [ ] To add sample login and signup functionality to make it more reusable
 - [ ] Add support for more css engines less|stylus|compass|sass
-- [ ] Add tests
 
 
 ## License
