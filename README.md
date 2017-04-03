@@ -11,12 +11,12 @@ $ npm install -g express-mvc-builder
 
 ## Quick Start
 
-The quickest way to get started with express is to utilize the executable `express-mvc` to generate an application as shown below:
+The quickest way to get started with express is to utilize the executable `express` to generate an application as shown below:
 
 Create the app:
 
 ```bash
-$ express-mvc myapp
+$ express myapp
 
    create : myapp
    create : myapp/package.json
