@@ -2,6 +2,7 @@
 
 [Express'](https://www.npmjs.com/package/express-mvc-generator) MVC application generator.
 
+[![Build Status](https://travis-ci.org/agrim123/express-mvc-builder.svg?branch=master)](https://travis-ci.org/agrim123/express-mvc-builder)
 [![npm version](http://img.shields.io/npm/v/express-mvc-builder.svg)](https://npmjs.org/package/express-mvc-builder)
 [![Downloads](http://img.shields.io/npm/dm/express-mvc-builder.svg)](https://npmjs.org/package/express-mvc-builder)
 

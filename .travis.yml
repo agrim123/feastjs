@@ -16,8 +16,7 @@ before_install:
   - "test ! -d node_modules || npm prune"
   - "test ! -d node_modules || npm rebuild"
 before_script:
-  - sleep 15
-  - npm install -g gulp
+  - npm install gulp
 script:
   - gulp
   - "npm run test-ci"
