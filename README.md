@@ -1,6 +1,6 @@
 [![Express Logo](https://i.cloudup.com/zfY6lL7eFa-3000x3000.png)](http://expressjs.com/)
 
-[Express'](https://www.npmjs.com/package/express-mvc-generator) MVC application generator.
+Express' MVC application generator.
 
 [![Build Status](https://travis-ci.org/agrim123/express-mvc-builder.svg?branch=master)](https://travis-ci.org/agrim123/express-mvc-builder)
 [![npm version](http://img.shields.io/npm/v/express-mvc-builder.svg)](https://npmjs.org/package/express-mvc-builder)
