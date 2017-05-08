@@ -99,18 +99,18 @@ function generateController(name, parentDir, controllerFilePath, listToBeGenerat
   mkdir(parentDir + '/app/views/' + name , function () {
     if (listToBeGenerated) {
       listToBeGenerated.forEach(function (list) {
-        touch(parentDir + '/app/views/' + name + '/' + list)
-        write(parentDir + '/app/views/' + name + '/' + list, list + ' View')
+        touch(parentDir + '/app/views/' + name + '/' + list + '.ejs')
+        write(parentDir + '/app/views/' + name + '/' + list + '.ejs', list + ' View')
       })
     }
   })
   if (listToBeGenerated) {
     var replaceRoutesText = ''
     listToBeGenerated.forEach(function (list) {
-      replaceRoutesText += 'router.get(\'/\', ' + name + '.' + list + ')\n'
+      replaceRoutesText += "router.get('/" + name + "/" + list + "', " + name + "." + list + ")\n"
     })
     replaceRoutesText += '\nmodule.exports = router'
-
+console.log(replaceRoutesText)
     var replaceIncludeText = 'var ' + name + ' = require(\'../app/controllers/' + name + '_controller\')\n' + 'var index = require(\'../app/controllers/index_controller\')'
 
     fs.readFile(parentDir + '/routes/routes.js', 'utf8', function (err,data) {
