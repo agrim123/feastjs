@@ -19,7 +19,7 @@ The quickest way to get started with express is to utilize the executable `expre
 Create the app:
 
 ```bash
-$ express myapp
+$ express new myapp
 
    create : myapp
    create : myapp/package.json
