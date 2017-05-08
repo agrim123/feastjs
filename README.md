@@ -135,6 +135,19 @@ This generator can also be further configured with the following command line fl
         --git           add .gitignore
     -f, --force         force on non-empty directory
 
+### Generate Controllers
+
+```bash
+$ express generate controller random index create
+
+   create : /home/hitman/myapp/app/controllers/random_controller.js
+   create : /home/hitman/myapp/app/views/random
+   create : /home/hitman/myapp/app/views/random/index
+   create : /home/hitman/myapp/app/views/random/create
+
+```
+Navigate to `/random/index`
+
 
 ### To-Do
 
