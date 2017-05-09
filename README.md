@@ -1,58 +1,56 @@
-[![Express Logo](https://i.cloudup.com/zfY6lL7eFa-3000x3000.png)](http://expressjs.com/)
+# FeastJS
 
-Express' MVC application generator.
-
-[![Build Status](https://travis-ci.org/agrim123/express-mvc-builder.svg?branch=master)](https://travis-ci.org/agrim123/express-mvc-builder)
-[![npm version](http://img.shields.io/npm/v/express-mvc-builder.svg)](https://npmjs.org/package/express-mvc-builder)
-[![Downloads](http://img.shields.io/npm/dm/express-mvc-builder.svg)](https://npmjs.org/package/express-mvc-builder)
+[![Build Status](https://travis-ci.org/agrim123/feastjs.svg?branch=master)](https://travis-ci.org/agrim123/feastjs)
+[![npm version](http://img.shields.io/npm/v/feastjs.svg)](https://npmjs.org/package/feastjs)
+[![Downloads](http://img.shields.io/npm/dm/feastjs.svg)](https://npmjs.org/package/feastjs)
 
 ## Installation
 
 ```sh
-$ npm install -g express-mvc-builder
+$ npm install -g feastjs
 ```
 
 ## Quick Start
 
-The quickest way to get started with express is to utilize the executable `express` to generate an application as shown below:
+The quickest way to get started with feastjs is to utilize the executable `feast` to generate an application as shown below:
 
 Create the app:
 
 ```bash
-$ express new myapp
+$ feast new myapp
 
    create : myapp
    create : myapp/package.json
    create : myapp/app.js
    create : myapp/gulpfile.js
    create : myapp/app
-   create : myapp/routes
-   create : myapp/routes/routes.js
-   create : myapp/bin
-   create : myapp/bin/www
    create : myapp/app/assets
    create : myapp/app/assets/stylesheets
    create : myapp/app/assets/stylesheets/style.css
    create : myapp/app/assets/javascripts
    create : myapp/app/controllers
    create : myapp/app/controllers/index_controller.js
+   create : myapp/app/helpers
    create : myapp/app/models
    create : myapp/app/middlewares
    create : myapp/app/views
+   create : myapp/app/views/error.ejs
    create : myapp/app/views/index
    create : myapp/app/views/index/home.ejs
-   create : myapp/app/views/error.ejs
+   create : myapp/bin
+   create : myapp/bin/www
    create : myapp/public
-   create : myapp/public/js
    create : myapp/public/css
+   create : myapp/public/js
    create : myapp/public/images
-   create : myapp/app/helpers
+   create : myapp/routes
+   create : myapp/routes/routes.js
 
    install dependencies:
      $ cd myapp && npm install
 
    run the app:
-     $ DEBUG=myapp:* npm start
+     $ DEBUG=myapp:* npm run watch
 
 
 ```
@@ -138,12 +136,12 @@ This generator can also be further configured with the following command line fl
 ### Generate Controllers
 
 ```bash
-$ express generate controller random index create
+$ feast generate controller random index create
 
-   create : /home/hitman/myapp/app/controllers/random_controller.js
-   create : /home/hitman/myapp/app/views/random
-   create : /home/hitman/myapp/app/views/random/index
-   create : /home/hitman/myapp/app/views/random/create
+   create : myapp/app/controllers/random_controller.js
+   create : myapp/app/views/random
+   create : myapp/app/views/random/index.ejs
+   create : myapp/app/views/random/create.ejs
 
 ```
 Navigate to `/random/index`
@@ -153,10 +151,11 @@ Navigate to `/random/index`
 
 - [ ] To add sample login and signup functionality to make it more reusable
 - [ ] Add support for more css engines less|stylus|compass|sass
+- [ ] Add support for more templating engines
 
 
 ## License
 
 [MIT](LICENSE)
 
-[downloads-url]: https://npmjs.org/package/express-mvc-builder
+[downloads-url]: https://npmjs.org/package/feastjs
