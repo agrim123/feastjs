@@ -1,0 +1,192 @@
+#!/usr/bin/env node
+
+var _ = require('lodash');
+var ejs = require('ejs')
+var path = require('path')
+var program = require('commander')
+var readline = require('readline')
+var util = require('util')
+var child_process = require('child_process')
+
+var _exit = process.exit
+var pkg = require('../package.json')
+
+var version = pkg.version
+
+var feastNew = require('./feast-new')
+var commonFunctions = require('../lib/common')
+var generator = require('../lib/generators/generator')
+var destroyer = require('../lib/destroyers/destroyer')
+
+// Re-assign process.exit because of commander
+// TODO: Switch to a different command framework
+process.exit = exit
+
+// CLI
+
+around(program, 'optionMissingArgument', function (fn, args) {
+  program.outputHelp()
+  fn.apply(this, args)
+  return { args: [], unknown: [] }
+})
+
+before(program, 'outputHelp', function () {
+  // track if help was shown for unknown option
+  this._helpShown = true
+})
+
+before(program, 'unknownOption', function () {
+  // allow unknown options if help was shown, to prevent trailing error
+  this._allowUnknownOption = this._helpShown
+
+  // show help if not yet shown
+  if (!this._helpShown) {
+    program.outputHelp()
+  }
+})
+
+program
+.version(pkg.version, '-v, --version')
+.option('    --git','add gitignore')
+
+//
+// Normalize version argument, i.e.
+//
+// $ feast -v
+// $ feast -V
+// $ feast --version
+// $ feast version
+//
+
+// make `-v` option case-insensitive
+
+process.argv = _.map(process.argv, function(arg) {
+  return (arg === '-V') ? '-v' : arg;
+})
+
+//
+// Normalize help argument, i.e.
+//
+// $ feast --help
+// $ feast help
+// $ feast
+// $ feast <unrecognized_cmd>
+//
+
+
+// $ feast help (--help synonym)
+
+program
+.command('help [command]')
+.description('')
+.action(function(){
+  if (program.args.length > 1 && _.isString(program.args[0])) {
+    var helpCmd = _.find(program.commands, {_name: program.args[0]})
+    if (helpCmd) {
+      helpCmd.help()
+      return
+    }
+  }
+  program.help()
+})
+
+// $ feast new <appname>
+
+program
+.command('new <name>')
+.action((name) => {
+  var destinationPath = name || '.'
+  commonFunctions.emptyDirectory(destinationPath, function (empty) {
+    feastNew.createApplication(program, name, destinationPath)
+  })
+})
+
+// $ feast generate <typeGenerate> <name> [listToBeGenerated...]
+
+program
+.command('generate <typeGenerate> <name> [listToBeGenerated...]')
+.alias('g')
+.action((typeGenerate, name, listToBeGenerated) => {
+  generator.generateCommand(typeGenerate, name, listToBeGenerated)
+})
+
+// $ feast delete <typeDelete> <name>
+
+program
+.command('delete <typeDelete> <name>')
+.alias('d')
+.action((typeDelete, name) => {
+  destroyer.deleteCommand(typeDelete, name)
+})
+
+// $ feast <unrecognized_cmd>
+// Output feast help when an unrecognized command is used.
+
+program
+.command('*')
+.action(function(cmd){
+  commonFunctions.warning('Unrecognized command => ' + cmd);
+  program.outputHelp();
+})
+
+program.parse(process.argv)
+
+// $ feast
+
+var NO_COMMAND_SPECIFIED = program.args.length === 0;
+if (NO_COMMAND_SPECIFIED) {
+  console.log('#####################\n##                 ##\n##    FeastJS      ##\n##     v' + version + '      ##\n##                 ##\n#####################\n')
+  program.outputHelp()
+}
+
+/**
+ * Install an around function; AOP.
+ */
+
+ function around (obj, method, fn) {
+  var old = obj[method]
+
+  obj[method] = function () {
+    var args = new Array(arguments.length)
+    for (var i = 0; i < args.length; i++) args[i] = arguments[i]
+      return fn.call(this, old, args)
+  }
+}
+
+/**
+ * Install a before function; AOP.
+ */
+
+ function before (obj, method, fn) {
+  var old = obj[method]
+  obj[method] = function () {
+    fn.call(this)
+    old.apply(this, arguments)
+  }
+}
+
+/**
+ * Graceful exit for async STDIO
+ */
+
+ function exit (code) {
+  // flush output for Node.js Windows pipe bug
+  // https://github.com/joyent/node/issues/6247 is just one bug example
+  // https://github.com/visionmedia/mocha/issues/333 has a good discussion
+  function done () {
+    if (!(draining--)) _exit(code)
+  }
+
+var draining = 0
+var streams = [process.stdout, process.stderr]
+
+exit.exited = true
+
+streams.forEach(function (stream) {
+    // submit empty write request and wait for completion
+    draining += 1
+    stream.write('', done)
+  })
+
+done()
+}
