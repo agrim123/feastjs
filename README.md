@@ -129,7 +129,6 @@ This generator can also be further configured with the following command line fl
 
     -h, --help          output usage information
         --version       output the version number
-    -e, --ejs           add ejs engine support (default)
         --git           add .gitignore
     -f, --force         force on non-empty directory
 
@@ -146,6 +145,16 @@ $ feast generate controller random index create
 ```
 Navigate to `/random/index`
 
+### Generate Models
+
+```bash
+$ feast generate model random title:string plate:number
+
+   create : myapp/app/models/random.js
+   create : myapp/test/models/random_test.js
+   create : myapp/db/migrations/[timestamp]_create_random.js
+
+```
 
 ### To-Do
 
