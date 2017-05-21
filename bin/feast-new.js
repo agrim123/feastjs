@@ -88,6 +88,7 @@ exports.createApplication = (program, name, path) => {
 
     commonFunctions.mkdir(path + '/test', function () {
       commonFunctions.mkdir(path + '/test/controllers')
+      commonFunctions.createFile(path + '/test/controllers/index_controller_test.js')
       commonFunctions.mkdir(path + '/test/helpers')
       commonFunctions.mkdir(path + '/test/models')
       complete()
