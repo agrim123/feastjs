@@ -65,7 +65,7 @@ Setup your assets:
 ```bash
 $ gulp
 ```
-Start your Express.js app at `http://localhost:3000/`:
+Start your app at `http://localhost:3000/`:
 
 ```bash
 $ npm start
@@ -126,11 +126,24 @@ myapp
 ## Command Line Options
 
 This generator can also be further configured with the following command line flags.
+```bash
+  Usage: feast [options] [command]
 
-    -h, --help          output usage information
-        --version       output the version number
-        --git           add .gitignore
-    -f, --force         force on non-empty directory
+
+  Commands:
+
+    help [command]
+    new <name>
+    generate|g <typeGenerate> <name> [listToBeGenerated...]
+    delete|d <typeDelete> <name>
+    *
+
+  Options:
+
+    -h, --help     output usage information
+    -v, --version  output the version number
+        --git      add gitignore
+```
 
 ### Generate Controllers
 
