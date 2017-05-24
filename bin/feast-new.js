@@ -75,6 +75,7 @@ exports.createApplication = (program, name, path) => {
 
     commonFunctions.mkdir(path + '/db', function () {
       commonFunctions.mkdir(path + '/db/migrations')
+      commonFunctions.copyTemplate('js/setup.js', path + '/db/setup.js')
       commonFunctions.createFile(path + '/db/seed.js')
       complete()
     })
@@ -117,11 +118,12 @@ exports.createApplication = (program, name, path) => {
       version: '0.0.0',
       private: true,
       scripts: {
-        'start': 'forever start --minUptime 1000 --spinSleepTime 1000 ./bin/www',
-        'stop': 'forever stop ./bin/www',
-        'restart': 'forever restart ./bin/www',
-        'watch': 'nodemon ./bin/www',
-        'db:seed': 'node ./app/db/seed.js',
+        'start': 'nodemon ./bin/www',
+        'db:seed': 'node ./db/seed.js',
+        'db:setup': 'node ./db/setup.js',
+        'prod:start': 'forever start --minUptime 1000 --spinSleepTime 1000 ./bin/www',
+        'prod:stop': 'forever stop ./bin/www',
+        'prod:restart': 'forever restart ./bin/www',
         'lint': 'eslint .',
         'test': 'mocha --reporter spec --bail --recursive test/',
       },
