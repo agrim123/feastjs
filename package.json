@@ -17,9 +17,9 @@
     "lodash": "^4.17.4",
     "mkdirp": "0.5.1",
     "replace": "^0.3.0",
+    "snyk": "^1.26.1",
     "sorted-object": "2.0.1",
-    "touch": "^1.0.0",
-    "snyk": "^1.26.1"
+    "touch": "^1.0.0"
   },
   "main": "bin/feast",
   "preferGlobal": true,

@@ -5,12 +5,11 @@ var MODE_0666 = parseInt('0666', 8)
 var MODE_0755 = parseInt('0755', 8)
 
 exports.createApplication = (program, name, path) => {
-  var wait = 5
-
+  var wait = 12
   console.log()
   function complete () {
     if (--wait) return
-      var prompt = commonFunctions.launchedFromCmd() ? '>' : '$'
+    var prompt = commonFunctions.launchedFromCmd() ? '>' : '$'
 
     console.log()
     console.log('   install dependencies:')
@@ -44,14 +43,17 @@ exports.createApplication = (program, name, path) => {
       commonFunctions.mkdir(path + '/app/assets', function() {
         commonFunctions.mkdir(path + '/app/assets/javascripts', function () {
           commonFunctions.copyTemplate('js/script.js', path + '/app/assets/javascripts/script.js')
+          complete()
         })
         commonFunctions.mkdir(path + '/app/assets/stylesheets', function () {
           commonFunctions.copyTemplate('css/style.css', path + '/app/assets/stylesheets/style.css')
+          complete()
         })
       })
       //Setup controllers
       commonFunctions.mkdir(path + '/app/controllers', function() {
         commonFunctions.copyTemplate('js/controllers/index_controller.js', path + '/app/controllers/index_controller.js')
+        complete()
       })
       //Setup models
       commonFunctions.mkdir(path + '/app/models')
@@ -62,10 +64,12 @@ exports.createApplication = (program, name, path) => {
         commonFunctions.mkdir(path + '/app/views/index', function() {
           commonFunctions.copyTemplate('ejs/home.ejs', path + '/app/views/index/home.ejs')
           commonFunctions.copyTemplate('ejs/error.ejs', path + '/app/views/error.ejs')
+          complete()
         })
         commonFunctions.mkdir(path + '/app/views/partials', function() {
           commonFunctions.copyTemplate('ejs/head.ejs', path + '/app/views/partials/head.ejs')
           commonFunctions.copyTemplate('ejs/footer.ejs', path + '/app/views/partials/footer.ejs')
+          complete()
         })
       })
       //Setup middlewares

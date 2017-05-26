@@ -19,32 +19,46 @@ Create the app:
 ```bash
 $ feast new myapp
 
-   create : myapp
-   create : myapp/package.json
-   create : myapp/app.js
-   create : myapp/gulpfile.js
-   create : myapp/app
-   create : myapp/app/assets
-   create : myapp/app/assets/stylesheets
-   create : myapp/app/assets/stylesheets/style.css
-   create : myapp/app/assets/javascripts
-   create : myapp/app/controllers
-   create : myapp/app/controllers/index_controller.js
-   create : myapp/app/helpers
-   create : myapp/app/models
-   create : myapp/app/middlewares
-   create : myapp/app/views
-   create : myapp/app/views/error.ejs
-   create : myapp/app/views/index
-   create : myapp/app/views/index/home.ejs
-   create : myapp/bin
-   create : myapp/bin/www
-   create : myapp/public
-   create : myapp/public/css
-   create : myapp/public/js
-   create : myapp/public/images
-   create : myapp/routes
-   create : myapp/routes/routes.js
+      create : myapp
+      create : myapp/package.json
+      create : myapp/.env
+      create : myapp/app.js
+      create : myapp/gulpfile.js
+      create : myapp/app
+      create : myapp/db
+      create : myapp/db/setup.js
+      create : myapp/db/seed.js
+      create : myapp/public
+      create : myapp/public/js
+      create : myapp/public/images
+      create : myapp/public/css
+      create : myapp/routes
+      create : myapp/routes/routes.js
+      create : myapp/bin
+      create : myapp/bin/www
+      create : myapp/app/assets
+      create : myapp/app/controllers
+      create : myapp/app/controllers/index_controller.js
+      create : myapp/app/models
+      create : myapp/app/helpers
+      create : myapp/app/views
+      create : myapp/app/middlewares
+      create : myapp/db/migrations
+      create : myapp/test/controllers
+      create : myapp/test/helpers
+      create : myapp/test/models
+      create : myapp/app/assets/javascripts
+      create : myapp/app/assets/javascripts/script.js
+      create : myapp/app/assets/stylesheets
+      create : myapp/app/assets/stylesheets/style.css
+      create : myapp/app/views/index
+      create : myapp/app/views/index/home.ejs
+      create : myapp/app/views/error.ejs
+      create : myapp/app/views/partials
+      create : myapp/app/views/partials/head.ejs
+      create : myapp/app/views/partials/footer.ejs
+      create : myapp/test
+      create : myapp/test/controllers/index_controller_test.js
 
    install dependencies:
      $ cd myapp && npm install
@@ -148,12 +162,24 @@ This generator can also be further configured with the following command line fl
 ### Generate Controllers
 
 ```bash
-$ feast generate controller random index create
+$ feast generate controller static_pages index home
 
-   create : myapp/app/controllers/random_controller.js
-   create : myapp/app/views/random
-   create : myapp/app/views/random/index.ejs
-   create : myapp/app/views/random/create.ejs
+    create : /home/hitman/myapp/app/controllers/static_pages_controller.js
+     route : get 'static_pages/home'
+     route : get 'static_pages/index'
+    invoke   test_unit
+    create : /home/hitman/myapp/test/controllers/static_pages_controller_test.js
+    invoke   helper
+    create : /home/hitman/myapp/app/helpers/static_pages_helper.js
+    invoke   js
+    create : /home/hitman/myapp/app/assets/javascripts/static_pages.js
+    invoke   css
+    create : /home/hitman/myapp/app/assets/stylesheets/static_pages.css
+    invoke   ejs
+    create : /home/hitman/myapp/app/views/static_pages
+    create : /home/hitman/myapp/app/views/static_pages/home.ejs
+    create : /home/hitman/myapp/app/views/static_pages/index.ejs
+
 
 ```
 Navigate to `/random/index`
@@ -171,7 +197,7 @@ $ feast generate model random title:string plate:number
 
 ### To-Do
 
-- [ ] To add sample login and signup functionality to make it more reusable
+- [ ] To add sample login and signup functionality
 - [ ] Add support for more css engines less|stylus|compass|sass
 - [ ] Add support for more templating engines
 
