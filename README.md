@@ -182,7 +182,7 @@ $ feast generate controller static_pages index home
 
 
 ```
-Navigate to `/random/index`
+Navigate to `/static_pages/index`
 
 ### Generate Models
 

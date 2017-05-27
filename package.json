@@ -1,11 +1,13 @@
 {
   "name": "feastjs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Agrim Mittal <agrimmittal97@gmail.com>",
   "keywords": [
     "feastjs",
     "mvc",
-    "web"
+    "web",
+    "express",
+    "nodejs"
   ],
   "repository": "agrim123/feastjs",
   "license": "MIT",
