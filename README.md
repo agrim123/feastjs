@@ -200,7 +200,7 @@ $ feast generate model random title:string plate:number
 - [ ] To add sample login and signup functionality
 - [ ] Add support for more css engines less|stylus|compass|sass
 - [ ] Add support for more templating engines
-
+- [ ] Add tests
 
 ## License
 
