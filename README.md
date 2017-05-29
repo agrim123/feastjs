@@ -4,10 +4,17 @@
 [![npm version](http://img.shields.io/npm/v/feastjs.svg)](https://npmjs.org/package/feastjs)
 [![Downloads](http://img.shields.io/npm/dm/feastjs.svg)](https://npmjs.org/package/feastjs)
 
+FeastJS is a CLI tool to standardize the directory structure for Node apps. The file structure reflects that of rails.
+
+## Motivation
+
+Recently while I was working on a few Node apps, I had to manually create a directory structure and place files accordingly. So, I came up with the idea of creating a CLI tool that does just that for me.
+This is still in dev phase and needs some modifications and additions.
+
 ## Installation
 
 ```sh
-$ npm install -g feastjs
+$ [sudo] npm install -g feastjs
 ```
 
 ## Quick Start
@@ -110,30 +117,45 @@ $ npm run watch
 myapp
 |
 |____app
-|      |
-|      |____assets
-|      |     |____javascripts
-|      |     |____stylesheets
-|      |
-|      |____controllers
-|      |    |____home.js
-|      |
-|      |____models
-|      |     |___home.js
-|      |
-|      |____helpers
-|      |
-|      |____middlewares
-|      |
-|      |____views
-|            |____index
-|            |    |____home.ejs
-|            |____error.ejs
+|    |
+|    |____assets
+|    |    |____javascripts
+|    |    |____stylesheets
+|    |
+|    |____controllers
+|    |    |____index_controller.js
+|    |
+|    |____models
+|    |
+|    |____helpers
+|    |
+|    |____middlewares
+|    |
+|    |____views
+|         |____index
+|         |    |____home.ejs
+|         |
+|         |____partials
+|         |    |____footer.ejs
+|         |    |____header.ejs
+|         |
+|         |____error.ejs
+|
+|____db
+|    |___seed.js
+|    |___setup.js
+|    |
+|    |___migrations
+|
+|____test
+|    |___controllers
+|    |
+|    |___models
+|    |
+|    |___helpers
 |
 |_____routes
 |     |___routes.js
-|
-|____node_modules
 |
 |____public
 |    |____css
@@ -147,6 +169,8 @@ myapp
 |_____gulpfile.js
 |
 |_____package.json
+|
+|____node_modules
 
 ```
 ## Command Line Options
