@@ -74,23 +74,35 @@ Install dependencies:
 ```bash
 $ npm install
 ```
+OR use [yarn](https://yarnpkg.com/en/)
+```bash
+$ yarn install
+```
 
 Setup your assets:
 ```bash
 $ gulp
 ```
+
+Currently it supports only `PostgreSQL`
+Update `.env` file
+Run
+
+```
+$ npm run db:setup
+```
+
 Start your app at `http://localhost:3000/`:
 
 ```bash
 $ npm start
 ```
 
-To watch over file changes(hugely reduces pain of restarting server) :
+To watch over file changes (hugely reduces pain of restarting server) :
 
 ```bash
 $ npm run watch
 ```
-
 
 ## File Structure
 
