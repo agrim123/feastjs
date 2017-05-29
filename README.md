@@ -84,9 +84,9 @@ Setup your assets:
 $ gulp
 ```
 
-Currently it supports only `PostgreSQL`  
-Update `.env` file  
-Run  
+Currently it supports only `PostgreSQL`
+Update `.env` file
+Run
 
 ```
 $ npm run db:setup
@@ -205,6 +205,11 @@ $ feast generate model random title:string plate:number
    create : myapp/test/models/random_test.js
    create : myapp/db/migrations/[timestamp]_create_random.js
 
+```
+
+Run migrations (this feature is still under dev)
+```bash
+$ npm run migrations
 ```
 
 ### To-Do
