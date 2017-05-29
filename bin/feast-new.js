@@ -122,7 +122,8 @@ exports.createApplication = (program, name, path) => {
       version: '0.0.0',
       private: true,
       scripts: {
-        'start': 'nodemon ./bin/www',
+        'start': 'node ./bin/www',
+        'watch': 'nodemon ./bin/www',
         'db:seed': 'node ./db/seed.js',
         'db:setup': 'node ./db/setup.js',
         'prod:start': 'forever start --minUptime 1000 --spinSleepTime 1000 ./bin/www',
