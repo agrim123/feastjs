@@ -126,6 +126,7 @@ exports.createApplication = (program, name, path) => {
         'watch': 'nodemon ./bin/www',
         'db:seed': 'node ./db/seed.js',
         'db:setup': 'node ./db/setup.js',
+        'migrations': 'node ./db/migrations/*.js',
         'prod:start': 'forever start --minUptime 1000 --spinSleepTime 1000 ./bin/www',
         'prod:stop': 'forever stop ./bin/www',
         'prod:restart': 'forever restart ./bin/www',
