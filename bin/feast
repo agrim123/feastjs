@@ -14,7 +14,7 @@ var pkg = require('../package.json')
 var version = pkg.version
 
 var feastNew = require('./feast-new')
-var commonFunctions = require('../lib/common')
+var cF = require('../lib/common')
 var generator = require('../lib/generators/generator')
 var destroyer = require('../lib/destroyers/destroyer')
 
@@ -97,7 +97,7 @@ program
 .alias('n')
 .action((name) => {
   var destinationPath = name || '.'
-  commonFunctions.emptyDirectory(destinationPath, function (empty) {
+  cF.emptyDirectory(destinationPath, function (empty) {
     feastNew.createApplication(program, name, destinationPath)
   })
 })
@@ -126,7 +126,7 @@ program
 program
 .command('*')
 .action(function(cmd){
-  commonFunctions.warning('Unrecognized command => ' + cmd);
+  cF.warning('Unrecognized command => ' + cmd);
   program.outputHelp();
 })
 

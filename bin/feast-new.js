@@ -1,5 +1,5 @@
 var sortedObject = require('sorted-object')
-var commonFunctions = require('../lib/common')
+var cF = require('../lib/common')
 
 var MODE_0666 = parseInt('0666', 8)
 var MODE_0755 = parseInt('0755', 8)
@@ -9,7 +9,7 @@ exports.createApplication = (program, name, path) => {
   console.log()
   function complete () {
     if (--wait) return
-    var prompt = commonFunctions.launchedFromCmd() ? '>' : '$'
+    var prompt = cF.launchedFromCmd() ? '>' : '$'
 
     console.log()
     console.log('   install dependencies:')
@@ -17,7 +17,7 @@ exports.createApplication = (program, name, path) => {
     console.log()
     console.log('   run the app:')
 
-    if (commonFunctions.launchedFromCmd()) {
+    if (cF.launchedFromCmd()) {
       console.log('     %s SET DEBUG=%s:* & npm start', prompt, name)
     } else {
       console.log('     %s DEBUG=%s:* npm start', prompt, name)
@@ -27,8 +27,8 @@ exports.createApplication = (program, name, path) => {
   }
 
   // JavaScript
-  var app = commonFunctions.loadTemplate('js/app.js')
-  var www = commonFunctions.loadTemplate('js/www')
+  var app = cF.loadTemplate('js/app.js')
+  var www = cF.loadTemplate('js/www')
 
   // App name
   www.locals.name = name
@@ -37,83 +37,83 @@ exports.createApplication = (program, name, path) => {
   app.locals.modules = Object.create(null)
   app.locals.uses = []
 
-  commonFunctions.mkdir(path, function () {
-    commonFunctions.mkdir(path + '/app', function () {
-      //Setup Our assets
-      commonFunctions.mkdir(path + '/app/assets', function() {
-        commonFunctions.mkdir(path + '/app/assets/javascripts', function () {
-          commonFunctions.copyTemplate('js/script.js', path + '/app/assets/javascripts/script.js')
+  cF.mkdir(path, function () {
+    cF.mkdir(path + '/app', function () {
+      // Setup Our assets
+      cF.mkdir(path + '/app/assets', function () {
+        cF.mkdir(path + '/app/assets/javascripts', function () {
+          cF.copyTemplate('js/script.js', path + '/app/assets/javascripts/script.js')
           complete()
         })
-        commonFunctions.mkdir(path + '/app/assets/stylesheets', function () {
-          commonFunctions.copyTemplate('css/style.css', path + '/app/assets/stylesheets/style.css')
+        cF.mkdir(path + '/app/assets/stylesheets', function () {
+          cF.copyTemplate('css/style.css', path + '/app/assets/stylesheets/style.css')
           complete()
         })
       })
-      //Setup controllers
-      commonFunctions.mkdir(path + '/app/controllers', function() {
-        commonFunctions.copyTemplate('js/controllers/index_controller.js', path + '/app/controllers/index_controller.js')
+      // Setup controllers
+      cF.mkdir(path + '/app/controllers', function () {
+        cF.copyTemplate('js/controllers/index_controller.js', path + '/app/controllers/index_controller.js')
         complete()
       })
-      //Setup models
-      commonFunctions.mkdir(path + '/app/models')
-      //Setup helpers
-      commonFunctions.mkdir(path + '/app/helpers')
-      //Setup views
-      commonFunctions.mkdir(path + '/app/views', function() {
-        commonFunctions.mkdir(path + '/app/views/index', function() {
-          commonFunctions.copyTemplate('ejs/home.ejs', path + '/app/views/index/home.ejs')
-          commonFunctions.copyTemplate('ejs/error.ejs', path + '/app/views/error.ejs')
+      // Setup models
+      cF.mkdir(path + '/app/models')
+      // Setup helpers
+      cF.mkdir(path + '/app/helpers')
+      // Setup views
+      cF.mkdir(path + '/app/views', function () {
+        cF.mkdir(path + '/app/views/index', function () {
+          cF.copyTemplate('ejs/home.ejs', path + '/app/views/index/home.ejs')
+          cF.copyTemplate('ejs/error.ejs', path + '/app/views/error.ejs')
           complete()
         })
-        commonFunctions.mkdir(path + '/app/views/partials', function() {
-          commonFunctions.copyTemplate('ejs/head.ejs', path + '/app/views/partials/head.ejs')
-          commonFunctions.copyTemplate('ejs/footer.ejs', path + '/app/views/partials/footer.ejs')
+        cF.mkdir(path + '/app/views/partials', function () {
+          cF.copyTemplate('ejs/head.ejs', path + '/app/views/partials/head.ejs')
+          cF.copyTemplate('ejs/footer.ejs', path + '/app/views/partials/footer.ejs')
           complete()
         })
       })
-      //Setup middlewares
-      commonFunctions.mkdir(path + '/app/middlewares')
+      // Setup middlewares
+      cF.mkdir(path + '/app/middlewares')
       complete()
     })
 
-    commonFunctions.mkdir(path + '/db', function () {
-      commonFunctions.mkdir(path + '/db/migrations')
-      commonFunctions.copyTemplate('js/setup.js', path + '/db/setup.js')
-      commonFunctions.createFile(path + '/db/seed.js')
+    cF.mkdir(path + '/db', function () {
+      cF.mkdir(path + '/db/migrations')
+      cF.copyTemplate('js/setup.js', path + '/db/setup.js')
+      cF.createFile(path + '/db/seed.js')
       complete()
     })
 
-    commonFunctions.mkdir(path + '/public', function () {
-      commonFunctions.mkdir(path + '/public/js')
-      commonFunctions.mkdir(path + '/public/images')
-      commonFunctions.mkdir(path + '/public/css')
+    cF.mkdir(path + '/public', function () {
+      cF.mkdir(path + '/public/js')
+      cF.mkdir(path + '/public/images')
+      cF.mkdir(path + '/public/css')
       complete()
     })
 
-    commonFunctions.mkdir(path + '/test', function () {
-      commonFunctions.mkdir(path + '/test/controllers')
-      commonFunctions.createFile(path + '/test/controllers/index_controller_test.js')
-      commonFunctions.mkdir(path + '/test/helpers')
-      commonFunctions.mkdir(path + '/test/models')
+    cF.mkdir(path + '/test', function () {
+      cF.mkdir(path + '/test/controllers')
+      cF.createFile(path + '/test/controllers/index_controller_test.js')
+      cF.mkdir(path + '/test/helpers')
+      cF.mkdir(path + '/test/models')
       complete()
     })
 
-    commonFunctions.mkdir(path + '/routes', function () {
-      commonFunctions.copyTemplate('js/routes/routes.js', path + '/routes/routes.js')
+    cF.mkdir(path + '/routes', function () {
+      cF.copyTemplate('js/routes/routes.js', path + '/routes/routes.js')
       complete()
     })
 
     // Template support
     switch (program.view) {
       default:
-      app.locals.view = {
-        engine: program.view
-      }
-      break
+        app.locals.view = {
+          engine: program.view
+        }
+        break
     }
 
-    //env
+    // env
     var env = 'NODE_ENV=dev\nDATABASE_URL=\nCOOKIE_SECRET=\nPORT='
 
     // package.json
@@ -131,7 +131,7 @@ exports.createApplication = (program, name, path) => {
         'prod:stop': 'forever stop ./bin/www',
         'prod:restart': 'forever restart ./bin/www',
         'lint': 'eslint .',
-        'test': 'mocha --reporter spec --bail --recursive test/',
+        'test': 'mocha --reporter spec --bail --recursive test/'
       },
       dependencies: {
         'bcrypt': '^1.0.2',
@@ -188,26 +188,26 @@ exports.createApplication = (program, name, path) => {
 
     switch (program.view) {
       case 'ejs':
-      pkg.dependencies['ejs'] = '~2.5.6'
-      break
+        pkg.dependencies['ejs'] = '~2.5.6'
+        break
     }
 
     // sort dependencies like npm(1)
     pkg.dependencies = sortedObject(pkg.dependencies)
 
     // write files
-    commonFunctions.write(path + '/package.json', JSON.stringify(pkg, null, 2) + '\n')
-    commonFunctions.write(path + '/.env', env)
-    commonFunctions.write(path + '/app.js', app.render())
-    commonFunctions.mkdir(path + '/bin', function () {
-      commonFunctions.write(path + '/bin/www', www.render(), MODE_0755)
+    cF.write(path + '/package.json', JSON.stringify(pkg, null, 2) + '\n')
+    cF.write(path + '/.env', env)
+    cF.write(path + '/app.js', app.render())
+    cF.mkdir(path + '/bin', function () {
+      cF.write(path + '/bin/www', www.render(), MODE_0755)
       complete()
     })
 
     if (program.git) {
-      commonFunctions.copyTemplate('js/gitignore', path + '/.gitignore')
+      cF.copyTemplate('js/gitignore', path + '/.gitignore')
     }
-    commonFunctions.copyTemplate('js/gulpfile.js', path + '/gulpfile.js')
+    cF.copyTemplate('js/gulpfile.js', path + '/gulpfile.js')
     complete()
   })
 }
