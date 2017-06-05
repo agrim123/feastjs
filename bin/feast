@@ -24,18 +24,18 @@ process.exit = exit
 
 // CLI
 
-around(program, 'optionMissingArgument', function (fn, args) {
+around(program, 'optionMissingArgument',  (fn, args) => {
   program.outputHelp()
   fn.apply(this, args)
   return { args: [], unknown: [] }
 })
 
-before(program, 'outputHelp', function () {
+before(program, 'outputHelp',  () => {
   // track if help was shown for unknown option
   this._helpShown = true
 })
 
-before(program, 'unknownOption', function () {
+before(program, 'unknownOption',  () => {
   // allow unknown options if help was shown, to prevent trailing error
   this._allowUnknownOption = this._helpShown
 
@@ -60,8 +60,8 @@ program
 
 // make `-v` option case-insensitive
 
-process.argv = _.map(process.argv, function(arg) {
-  return (arg === '-V') ? '-v' : arg;
+process.argv = _.map(process.argv, (arg) => {
+  return (arg === '-V') ? '-v' : arg
 })
 
 //
@@ -79,7 +79,7 @@ process.argv = _.map(process.argv, function(arg) {
 program
 .command('help [command]')
 .description('')
-.action(function(){
+.action(() => {
   if (program.args.length > 1 && _.isString(program.args[0])) {
     var helpCmd = _.find(program.commands, {_name: program.args[0]})
     if (helpCmd) {
@@ -97,7 +97,7 @@ program
 .alias('n')
 .action((name) => {
   var destinationPath = name || '.'
-  cF.emptyDirectory(destinationPath, function (empty) {
+  cF.emptyDirectory(destinationPath, (empty) => {
     feastNew.createApplication(program, name, destinationPath)
   })
 })
@@ -125,29 +125,29 @@ program
 
 program
 .command('*')
-.action(function(cmd){
-  cF.warning('Unrecognized command => ' + cmd);
-  program.outputHelp();
+.action((cmd) => {
+  cF.warning('Unrecognized command => ' + cmd)
+  program.outputHelp()
 })
 
 program.parse(process.argv)
 
 // $ feast
 
-var NO_COMMAND_SPECIFIED = program.args.length === 0;
+var NO_COMMAND_SPECIFIED = program.args.length === 0
 if (NO_COMMAND_SPECIFIED) {
   console.log('#####################\n##                 ##\n##    FeastJS      ##\n##     v' + version + '      ##\n##                 ##\n#####################\n')
   program.outputHelp()
 }
 
 /**
- * Install an around function; AOP.
+ * Install an around function AOP.
  */
 
  function around (obj, method, fn) {
   var old = obj[method]
 
-  obj[method] = function () {
+  obj[method] = function() {
     var args = new Array(arguments.length)
     for (var i = 0; i < args.length; i++) args[i] = arguments[i]
       return fn.call(this, old, args)
@@ -155,12 +155,12 @@ if (NO_COMMAND_SPECIFIED) {
 }
 
 /**
- * Install a before function; AOP.
+ * Install a before function AOP.
  */
 
  function before (obj, method, fn) {
   var old = obj[method]
-  obj[method] = function () {
+  obj[method] = function() {
     fn.call(this)
     old.apply(this, arguments)
   }

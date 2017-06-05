@@ -37,21 +37,21 @@ exports.createApplication = (program, name, path) => {
   app.locals.modules = Object.create(null)
   app.locals.uses = []
 
-  cF.mkdir(path, function () {
-    cF.mkdir(path + '/app', function () {
+  cF.mkdir(path, () => {
+    cF.mkdir(path + '/app', () => {
       // Setup Our assets
-      cF.mkdir(path + '/app/assets', function () {
-        cF.mkdir(path + '/app/assets/javascripts', function () {
+      cF.mkdir(path + '/app/assets', () => {
+        cF.mkdir(path + '/app/assets/javascripts', () => {
           cF.copyTemplate('js/script.js', path + '/app/assets/javascripts/script.js')
           complete()
         })
-        cF.mkdir(path + '/app/assets/stylesheets', function () {
+        cF.mkdir(path + '/app/assets/stylesheets', () => {
           cF.copyTemplate('css/style.css', path + '/app/assets/stylesheets/style.css')
           complete()
         })
       })
       // Setup controllers
-      cF.mkdir(path + '/app/controllers', function () {
+      cF.mkdir(path + '/app/controllers', () => {
         cF.copyTemplate('js/controllers/index_controller.js', path + '/app/controllers/index_controller.js')
         complete()
       })
@@ -60,13 +60,13 @@ exports.createApplication = (program, name, path) => {
       // Setup helpers
       cF.mkdir(path + '/app/helpers')
       // Setup views
-      cF.mkdir(path + '/app/views', function () {
-        cF.mkdir(path + '/app/views/index', function () {
+      cF.mkdir(path + '/app/views', () => {
+        cF.mkdir(path + '/app/views/index', () => {
           cF.copyTemplate('ejs/home.ejs', path + '/app/views/index/home.ejs')
           cF.copyTemplate('ejs/error.ejs', path + '/app/views/error.ejs')
           complete()
         })
-        cF.mkdir(path + '/app/views/partials', function () {
+        cF.mkdir(path + '/app/views/partials', () => {
           cF.copyTemplate('ejs/head.ejs', path + '/app/views/partials/head.ejs')
           cF.copyTemplate('ejs/footer.ejs', path + '/app/views/partials/footer.ejs')
           complete()
@@ -77,21 +77,21 @@ exports.createApplication = (program, name, path) => {
       complete()
     })
 
-    cF.mkdir(path + '/db', function () {
+    cF.mkdir(path + '/db', () => {
       cF.mkdir(path + '/db/migrations')
       cF.copyTemplate('js/setup.js', path + '/db/setup.js')
       cF.createFile(path + '/db/seed.js')
       complete()
     })
 
-    cF.mkdir(path + '/public', function () {
+    cF.mkdir(path + '/public', () => {
       cF.mkdir(path + '/public/js')
       cF.mkdir(path + '/public/images')
       cF.mkdir(path + '/public/css')
       complete()
     })
 
-    cF.mkdir(path + '/test', function () {
+    cF.mkdir(path + '/test', () => {
       cF.mkdir(path + '/test/controllers')
       cF.createFile(path + '/test/controllers/index_controller_test.js')
       cF.mkdir(path + '/test/helpers')
@@ -99,7 +99,7 @@ exports.createApplication = (program, name, path) => {
       complete()
     })
 
-    cF.mkdir(path + '/routes', function () {
+    cF.mkdir(path + '/routes', () => {
       cF.copyTemplate('js/routes/routes.js', path + '/routes/routes.js')
       complete()
     })
@@ -199,7 +199,7 @@ exports.createApplication = (program, name, path) => {
     cF.write(path + '/package.json', JSON.stringify(pkg, null, 2) + '\n')
     cF.write(path + '/.env', env)
     cF.write(path + '/app.js', app.render())
-    cF.mkdir(path + '/bin', function () {
+    cF.mkdir(path + '/bin', () => {
       cF.write(path + '/bin/www', www.render(), MODE_0755)
       complete()
     })
