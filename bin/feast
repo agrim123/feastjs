@@ -24,11 +24,11 @@ process.exit = exit
 
 // CLI
 
-around(program, 'optionMissingArgument',  (fn, args) => {
-  program.outputHelp()
-  fn.apply(this, args)
-  return { args: [], unknown: [] }
-})
+// around(program, 'optionMissingArgument',  (fn, args) => {
+//   program.outputHelp()
+//   fn.apply(this, args)
+//   return { args: [], unknown: [] }
+// })
 
 before(program, 'outputHelp',  () => {
   // track if help was shown for unknown option
