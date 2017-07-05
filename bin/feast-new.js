@@ -14,13 +14,19 @@ exports.createApplication = (program, name, path) => {
     console.log()
     console.log('   install dependencies:')
     console.log('     %s cd %s && npm install', prompt, path)
+    console.log('     ----------OR----------------')
+    console.log('     %s cd %s && yarn install', prompt, path)
     console.log()
     console.log('   run the app:')
 
     if (cF.launchedFromCmd()) {
       console.log('     %s SET DEBUG=%s:* & npm start', prompt, name)
+      console.log('     ----------OR----------------')
+      console.log('     %s DEBUG=%s:* yarn start', prompt, name)
     } else {
       console.log('     %s DEBUG=%s:* npm start', prompt, name)
+      console.log('     ----------OR----------------')
+      console.log('     %s DEBUG=%s:* yarn start', prompt, name)
     }
 
     console.log()
@@ -178,7 +184,6 @@ exports.createApplication = (program, name, path) => {
         'gulp-rename': '^1.2.2',
         'gulp-size': '^2.1.0',
         'gulp-uglify': '^2.1.2',
-        'nodemon': '^1.11.0',
         'jshint-stylish': '^2.2.1',
         'mocha': '^3.2.0',
         'nodemon': '^1.11.0',
